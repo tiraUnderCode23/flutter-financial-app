@@ -3,6 +3,7 @@ import '../services/advanced_database_helper.dart';
 import '../models/debt_models.dart';
 import '../models/income_models.dart';
 import '../models/expense_models.dart';
+import 'unified_data_entry_screen.dart';
 
 class UnifiedSettingsManagementScreen extends StatefulWidget {
   const UnifiedSettingsManagementScreen({super.key});
@@ -874,12 +875,16 @@ class _UnifiedSettingsManagementScreenState
   }
 
   void _editCheck(Check check) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('עריכת שיקים תהיה זמינה בגרסה הבאה'),
-        duration: Duration(seconds: 2),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UnifiedDataEntryScreen(),
       ),
-    );
+    ).then((result) {
+      if (result == true) {
+        _loadAllData();
+      }
+    });
   }
 
   void _deleteCheck(Check check) {
@@ -956,12 +961,16 @@ class _UnifiedSettingsManagementScreenState
   }
 
   void _editLoan(Loan loan) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('עריכת הלוואות תהיה זמינה בגרסה הבאה'),
-        duration: Duration(seconds: 2),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UnifiedDataEntryScreen(),
       ),
-    );
+    ).then((result) {
+      if (result == true) {
+        _loadAllData();
+      }
+    });
   }
 
   void _deleteLoan(Loan loan) {
@@ -1057,28 +1066,34 @@ class _UnifiedSettingsManagementScreenState
               leading: const Icon(Icons.receipt_long),
               title: const Text('הוספת שיק'),
               subtitle: const Text('יצירת שיק חדש למעקב'),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('הוספת שיקים זמינה במסך הרישום היומי'),
-                    duration: Duration(seconds: 3),
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UnifiedDataEntryScreen(),
                   ),
                 );
+                if (result == true) {
+                  _loadAllData();
+                }
               },
             ),
             ListTile(
               leading: const Icon(Icons.account_balance),
               title: const Text('הוספת הלוואה'),
               subtitle: const Text('יצירת הלוואה חדשה למעקב'),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('הוספת הלוואות זמינה במסך הרישום היומי'),
-                    duration: Duration(seconds: 3),
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UnifiedDataEntryScreen(),
                   ),
                 );
+                if (result == true) {
+                  _loadAllData();
+                }
               },
             ),
           ],

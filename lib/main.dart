@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'screens/enhanced_home_screen_simple.dart';
+import 'screens/main_app_screen.dart';
 
 void main() {
   runApp(const FinancialApp());
@@ -143,7 +143,7 @@ class FinancialApp extends StatelessWidget {
         ),
       ),
 
-      home: const EnhancedHomeScreen(),
+      home: const MainAppScreen(),
     );
   }
 }
