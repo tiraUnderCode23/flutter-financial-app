@@ -308,13 +308,25 @@ class AdvancedDatabaseHelper {
   // פונקציות ספקים
   Future<void> insertVendor(Vendor vendor) async {
     final db = await database;
-    await db.insert('vendors', vendor.toMap());
+    await db.insert('vendors', {
+      'id': vendor.name, // Using name as ID for now
+      'name': vendor.name,
+      'contact': vendor.phone ?? '',
+      'address': vendor.address ?? '',
+      'taxId': '',
+      'notes': vendor.category ?? '',
+    });
   }
 
   Future<List<Vendor>> getVendors() async {
     final db = await database;
     final maps = await db.query('vendors', orderBy: 'name ASC');
-    return maps.map((map) => Vendor.fromMap(map)).toList();
+    return maps.map((map) => Vendor(
+      name: map['name'] as String,
+      address: map['address'] as String?,
+      phone: map['contact'] as String?,
+      category: map['notes'] as String?,
+    )).toList();
   }
 
   Future<Vendor?> getVendorByName(String name) async {
@@ -324,7 +336,12 @@ class AdvancedDatabaseHelper {
       where: 'name = ?',
       whereArgs: [name],
     );
-    return maps.isNotEmpty ? Vendor.fromMap(maps.first) : null;
+    return maps.isNotEmpty ? Vendor(
+      name: maps.first['name'] as String,
+      address: maps.first['address'] as String?,
+      phone: maps.first['contact'] as String?,
+      category: maps.first['notes'] as String?,
+    ) : null;
   }
 
   // פונקציות הכנסות מתקדמות

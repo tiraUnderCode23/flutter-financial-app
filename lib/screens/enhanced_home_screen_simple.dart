@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../services/advanced_database_helper.dart';
 import 'unified_settings_management_screen.dart';
+import 'add_income_screen.dart';
+import 'add_expense_screen.dart';
+import 'transactions_screen.dart';
+import 'statistics_screen.dart';
 
 class EnhancedHomeScreen extends StatefulWidget {
   const EnhancedHomeScreen({Key? key}) : super(key: key);
@@ -39,9 +43,15 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen>
     });
 
     try {
-      // טעינת נתונים מהמסד (יהיה מקושר מאוחר יותר)
-      _totalIncome = 15000.0; // דמה
-      _totalExpenses = 8500.0; // דמה
+      // טעינת נתונים אמיתיים מהמסד
+      final incomes = await _databaseHelper.getAdvancedIncomes();
+      final expenses = await _databaseHelper.getAdvancedExpenses();
+      
+      final totalIncomes = incomes.fold(0.0, (sum, income) => sum + income.amount);
+      final totalExpenses = expenses.fold(0.0, (sum, expense) => sum + expense.amount);
+      
+      _totalIncome = totalIncomes;
+      _totalExpenses = totalExpenses;
       _balance = _totalIncome - _totalExpenses;
 
       setState(() {
@@ -450,38 +460,22 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen>
   }
 
   Widget _buildTodayTab() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.today, size: 64, color: Colors.grey),
-          SizedBox(height: 16),
-          Text(
-            'עסקאות היום',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8),
-          Text('יוצג בקרוב', style: TextStyle(color: Colors.grey)),
-        ],
-      ),
+    return Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const TransactionsScreen(),
+        );
+      },
     );
   }
 
   Widget _buildStatisticsTab() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.bar_chart, size: 64, color: Colors.grey),
-          SizedBox(height: 16),
-          Text(
-            'סטטיסטיקות מפורטות',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8),
-          Text('יהיו זמינות בקרוב', style: TextStyle(color: Colors.grey)),
-        ],
-      ),
+    return Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const StatisticsScreen(),
+        );
+      },
     );
   }
 
@@ -592,15 +586,42 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen>
   }
 
   void _showAddExpenseDialog() {
-    _showSnackBar('הוספת הוצאה תתווסף בקרוב');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddExpenseScreen(),
+      ),
+    ).then((result) {
+      if (result == true) {
+        _loadData(); // רענן את הנתונים
+      }
+    });
   }
 
   void _showAddIncomeDialog() {
-    _showSnackBar('הוספת הכנסה תתווסף בקרוב');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddIncomeScreen(),
+      ),
+    ).then((result) {
+      if (result == true) {
+        _loadData(); // רענן את הנתונים
+      }
+    });
   }
 
   void _showAddCheckDialog() {
-    _showSnackBar('הוספת שיק תתווסף בקרוב');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddExpenseScreen(),
+      ),
+    ).then((result) {
+      if (result == true) {
+        _loadData();
+      }
+    });
   }
 
   void _performSync() {
