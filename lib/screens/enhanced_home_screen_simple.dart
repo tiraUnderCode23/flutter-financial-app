@@ -9,7 +9,8 @@ class EnhancedHomeScreen extends StatefulWidget {
   State<EnhancedHomeScreen> createState() => _EnhancedHomeScreenState();
 }
 
-class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProviderStateMixin {
+class _EnhancedHomeScreenState extends State<EnhancedHomeScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   final AdvancedDatabaseHelper _databaseHelper = AdvancedDatabaseHelper();
 
@@ -42,7 +43,7 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
       _totalIncome = 15000.0; // דמה
       _totalExpenses = 8500.0; // דמה
       _balance = _totalIncome - _totalExpenses;
-      
+
       setState(() {
         _isLoading = false;
       });
@@ -66,17 +67,23 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
           IconButton(
             icon: Icon(
               _isConnectedToGitHub ? Icons.cloud_done : Icons.cloud_off,
-              color: _isConnectedToGitHub ? Colors.green.shade300 : Colors.red.shade300,
+              color: _isConnectedToGitHub
+                  ? Colors.green.shade300
+                  : Colors.red.shade300,
             ),
             onPressed: () => _showGitHubInfo(),
-            tooltip: _isConnectedToGitHub ? 'מחובר ל-GitHub' : 'לא מחובר ל-GitHub',
+            tooltip: _isConnectedToGitHub
+                ? 'מחובר ל-GitHub'
+                : 'לא מחובר ל-GitHub',
           ),
           // הגדרות
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const UnifiedSettingsManagementScreen()),
+              MaterialPageRoute(
+                builder: (context) => const UnifiedSettingsManagementScreen(),
+              ),
             ),
           ),
         ],
@@ -93,17 +100,17 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
           ],
         ),
       ),
-      body: _isLoading 
-        ? _buildLoadingScreen()
-        : TabBarView(
-            controller: _tabController,
-            children: [
-              _buildDashboardTab(),
-              _buildTodayTab(),
-              _buildStatisticsTab(),
-              _buildSyncTab(),
-            ],
-          ),
+      body: _isLoading
+          ? _buildLoadingScreen()
+          : TabBarView(
+              controller: _tabController,
+              children: [
+                _buildDashboardTab(),
+                _buildTodayTab(),
+                _buildStatisticsTab(),
+                _buildSyncTab(),
+              ],
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showQuickActionMenu,
         backgroundColor: Colors.blue.shade800,
@@ -176,10 +183,11 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
                     children: [
                       Text(
                         'שלום וברוך הבא!',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       Text(
                         'ניהול פיננסי חכם עם סנכרון GitHub',
@@ -193,9 +201,12 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
                 ),
                 // מחוון סטטוס
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
-                    color: _isConnectedToGitHub 
+                    color: _isConnectedToGitHub
                         ? Colors.green.withOpacity(0.2)
                         : Colors.red.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(20),
@@ -207,7 +218,9 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        _isConnectedToGitHub ? Icons.cloud_done : Icons.cloud_off,
+                        _isConnectedToGitHub
+                            ? Icons.cloud_done
+                            : Icons.cloud_off,
                         color: _isConnectedToGitHub ? Colors.green : Colors.red,
                         size: 16,
                       ),
@@ -215,7 +228,9 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
                       Text(
                         _isConnectedToGitHub ? 'מחובר' : 'לא מחובר',
                         style: TextStyle(
-                          color: _isConnectedToGitHub ? Colors.green : Colors.red,
+                          color: _isConnectedToGitHub
+                              ? Colors.green
+                              : Colors.red,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ),
@@ -264,7 +279,12 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
     );
   }
 
-  Widget _buildFinancialCard(String title, String amount, IconData icon, Color color) {
+  Widget _buildFinancialCard(
+    String title,
+    String amount,
+    IconData icon,
+    Color color,
+  ) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -301,9 +321,9 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
           children: [
             Text(
               'פעולות מהירות',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
@@ -337,7 +357,10 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
                     Colors.orange,
                     () => Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const UnifiedSettingsManagementScreen()),
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const UnifiedSettingsManagementScreen(),
+                      ),
                     ),
                   ),
                 ),
@@ -358,7 +381,12 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
     );
   }
 
-  Widget _buildQuickActionButton(String title, IconData icon, Color color, VoidCallback onPressed) {
+  Widget _buildQuickActionButton(
+    String title,
+    IconData icon,
+    Color color,
+    VoidCallback onPressed,
+  ) {
     return ElevatedButton.icon(
       onPressed: onPressed,
       icon: Icon(icon, size: 20),
@@ -384,9 +412,9 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
               children: [
                 Text(
                   'עסקאות אחרונות',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                   onPressed: () => _tabController.animateTo(1),
@@ -433,10 +461,7 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8),
-          Text(
-            'יוצג בקרוב',
-            style: TextStyle(color: Colors.grey),
-          ),
+          Text('יוצג בקרוב', style: TextStyle(color: Colors.grey)),
         ],
       ),
     );
@@ -454,10 +479,7 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8),
-          Text(
-            'יהיו זמינות בקרוב',
-            style: TextStyle(color: Colors.grey),
-          ),
+          Text('יהיו זמינות בקרוב', style: TextStyle(color: Colors.grey)),
         ],
       ),
     );
@@ -482,7 +504,7 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
             ),
             const SizedBox(height: 8),
             Text(
-              _isConnectedToGitHub 
+              _isConnectedToGitHub
                   ? 'הנתונים שלך מסונכרנים בענן'
                   : 'התחבר כדי לסנכרן את הנתונים',
               style: const TextStyle(color: Colors.grey),
@@ -491,11 +513,16 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
             ElevatedButton.icon(
               onPressed: _isConnectedToGitHub ? _performSync : _connectToGitHub,
               icon: Icon(_isConnectedToGitHub ? Icons.sync : Icons.link),
-              label: Text(_isConnectedToGitHub ? 'סנכרן עכשיו' : 'התחבר ל-GitHub'),
+              label: Text(
+                _isConnectedToGitHub ? 'סנכרן עכשיו' : 'התחבר ל-GitHub',
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue.shade800,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
               ),
             ),
           ],
@@ -521,7 +548,10 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
             ),
             const SizedBox(height: 16),
             ListTile(
-              leading: const Icon(Icons.remove_circle_outline, color: Colors.red),
+              leading: const Icon(
+                Icons.remove_circle_outline,
+                color: Colors.red,
+              ),
               title: const Text('הוסף הוצאה'),
               onTap: () {
                 Navigator.pop(context);
@@ -529,7 +559,10 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
               },
             ),
             ListTile(
-              leading: const Icon(Icons.add_circle_outline, color: Colors.green),
+              leading: const Icon(
+                Icons.add_circle_outline,
+                color: Colors.green,
+              ),
               title: const Text('הוסף הכנסה'),
               onTap: () {
                 Navigator.pop(context);
@@ -577,7 +610,7 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
     }
 
     _showSnackBar('מתחיל סנכרון...');
-    
+
     // סימולציה של סנכרון
     Future.delayed(const Duration(seconds: 2), () {
       _showSnackBar('הסנכרון הושלם בהצלחה ✅');
@@ -605,9 +638,11 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
               color: _isConnectedToGitHub ? Colors.green : Colors.red,
             ),
             const SizedBox(height: 16),
-            Text(_isConnectedToGitHub 
-                ? 'מחובר ל-GitHub\nהנתונים מסונכרנים בענן'
-                : 'לא מחובר ל-GitHub\nהנתונים שמורים רק מקומית'),
+            Text(
+              _isConnectedToGitHub
+                  ? 'מחובר ל-GitHub\nהנתונים מסונכרנים בענן'
+                  : 'לא מחובר ל-GitHub\nהנתונים שמורים רק מקומית',
+            ),
           ],
         ),
         actions: [
@@ -621,8 +656,8 @@ class _EnhancedHomeScreenState extends State<EnhancedHomeScreen> with TickerProv
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 }
